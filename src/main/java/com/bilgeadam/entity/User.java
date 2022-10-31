@@ -4,6 +4,7 @@ import java.util.Date;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -39,8 +40,8 @@ public class User {
 	@Column(name="created_on")
 	private Date createdOn;
 	
-	@ManyToOne
-	@JoinColumn(name= "role_id", nullable=false,referencedColumnName = "id")
+	@ManyToOne(cascade = CascadeType.PERSIST)
+	@JoinColumn(name= "role_id",nullable=false,referencedColumnName = "id")
 	private Role role;
 	
 	@OneToOne
