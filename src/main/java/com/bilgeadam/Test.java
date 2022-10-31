@@ -6,8 +6,7 @@ public class Test {
 
 	public static void main(String[] args) {
 		
-		
-		HibernateSession.getSessionFactory().openSession();
+			HibernateSession.getSessionFactory().openSession();
 		
 	}
 
