@@ -5,13 +5,14 @@ import java.util.List;
 import org.hibernate.Session;
 
 import com.bilgeadam.entity.User;
+import com.bilgeadam.entity.UserDetail;
 
 import jakarta.persistence.TypedQuery;
 
-public class UserDao implements IRepository<User>{
+public class UserDetailDao implements IRepository<UserDetail>{
 
 	@Override
-	public void create(User entity) {
+	public void create(UserDetail entity) {
 		
 		Session session = null;
 		try {
@@ -19,24 +20,26 @@ public class UserDao implements IRepository<User>{
 			session.getTransaction().begin();
 			session.persist(entity);
 			session.getTransaction().commit();
-			System.out.println("User data is added to Db.");
+			System.out.println("UserDetail data is added to Db.");
 		} catch (Exception e) {
 			e.getMessage();
-			System.err.println("Some problem occured while adding USER data.");
+			System.err.println("Some problem occured while adding UserDetail data.");
 		}finally {
 			session.close();
 		}		
 	}
 	
 	@Override
-	public void update(long id, User entity) {
+	public void update(long id, UserDetail entity) {
 		
 		Session session = null;
 		try {
-			User updateUser = find(id);
-			updateUser.setEmail(entity.getEmail());
-			updateUser.setPassword(entity.getPassword());
-			updateUser.setRole(entity.getRole());
+			UserDetail updateUser = find(id);
+			updateUser.setFirstname(entity.getFirstname());
+			updateUser.setLastname(entity.getLastname());
+			updateUser.setBio(entity.getBio());
+			updateUser.setGender(entity.getGender());
+			updateUser.setPicture(entity.getPicture());
 		//	updateUser.setUserDetail(entity.getUserDetail());
 			
 			
@@ -47,7 +50,7 @@ public class UserDao implements IRepository<User>{
 			System.out.println("Successfully updated.");
 		} catch (Exception e) {
 		e.printStackTrace();
-		System.out.println("Some problem occured while UPDATING User data.");
+		System.out.println("Some problem occured while UPDATING UserDetail data.");
 		}finally {
 			session.close();
 		}	
@@ -59,56 +62,56 @@ public class UserDao implements IRepository<User>{
 		Session session= null;
 		
 		try {
-			User deleteAddress = find(id);
-			if(deleteAddress != null) {
+			UserDetail deleteUserDetail = find(id);
+			if(deleteUserDetail != null) {
 				session = databaseConnection();
 				session.getTransaction().begin();
-				session.remove(deleteAddress);
+				session.remove(deleteUserDetail);
 				session.getTransaction().commit();
 				
 				System.out.println("Successfully deleted");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("Some problem occured while DELETING User data.");		
+			System.out.println("Some problem occured while DELETING UserDetail data.");		
 		} finally {
 			session.close();
 		}		
 	}
 
 	@Override
-	public List<User> listAll() {
+	public List<UserDetail> listAll() {
 		Session session = databaseConnection();
 		//hibernate query language
-		String hql = "select adr from User as adr";
+		String hql = "select adr from UserDetail as adr";
 		
-		TypedQuery<User> typedQuery = session.createQuery(hql,User.class);
-		List<User> userList = typedQuery.getResultList();
+		TypedQuery<UserDetail> typedQuery = session.createQuery(hql,UserDetail.class);
+		List<UserDetail> userList = typedQuery.getResultList();
 		
 		return userList;
 	}
 
 	@Override
-	public User find(long id) {
-		User user = null;
+	public UserDetail find(long id) {
+		UserDetail userDetail = null;
 		Session session = databaseConnection();
 		
 		try {
-			user = session.find(User.class, id);
+			userDetail = session.find(UserDetail.class, id);
 			
-			if(user != null) {
-				System.out.println("Found user : " + user);
+			if(userDetail != null) {
+				System.out.println("Found UserDetail : " + userDetail);
 			}else {
-				System.out.println("user not found");
+				System.out.println("UserDetail not found");
 			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("Some problem occured while FIND user data.");
+			System.out.println("Some problem occured while FIND UserDetail data.");
 		}finally {
 			session.close();
 		}
-		return user;
+		return userDetail;
 	}
 
 }

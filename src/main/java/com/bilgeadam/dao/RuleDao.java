@@ -4,14 +4,14 @@ import java.util.List;
 
 import org.hibernate.Session;
 
-import com.bilgeadam.entity.User;
+import com.bilgeadam.entity.Rule;
 
 import jakarta.persistence.TypedQuery;
 
-public class UserDao implements IRepository<User>{
+public class RuleDao implements IRepository<Rule>{
 
 	@Override
-	public void create(User entity) {
+	public void create(Rule entity) {
 		
 		Session session = null;
 		try {
@@ -19,35 +19,35 @@ public class UserDao implements IRepository<User>{
 			session.getTransaction().begin();
 			session.persist(entity);
 			session.getTransaction().commit();
-			System.out.println("User data is added to Db.");
+			System.out.println("Rule data is added to Db.");
 		} catch (Exception e) {
 			e.getMessage();
-			System.err.println("Some problem occured while adding USER data.");
+			System.err.println("Some problem occured while adding Rule data.");
 		}finally {
 			session.close();
 		}		
 	}
 	
 	@Override
-	public void update(long id, User entity) {
+	public void update(long id, Rule entity) {
 		
 		Session session = null;
 		try {
-			User updateUser = find(id);
-			updateUser.setEmail(entity.getEmail());
-			updateUser.setPassword(entity.getPassword());
-			updateUser.setRole(entity.getRole());
+			Rule Rule = find(id);
+			Rule.setRuleName(entity.getRuleName());
+			Rule.setRoles(entity.getRoles());
+			Rule.setDescription(entity.getDescription());
 		//	updateUser.setUserDetail(entity.getUserDetail());
 			
 			
 			session = databaseConnection();
 			session.getTransaction().begin();
-			session.merge(updateUser);
+			session.merge(Rule);
 			session.getTransaction().commit();
 			System.out.println("Successfully updated.");
 		} catch (Exception e) {
 		e.printStackTrace();
-		System.out.println("Some problem occured while UPDATING User data.");
+		System.out.println("Some problem occured while UPDATING Rule data.");
 		}finally {
 			session.close();
 		}	
@@ -59,7 +59,7 @@ public class UserDao implements IRepository<User>{
 		Session session= null;
 		
 		try {
-			User deleteAddress = find(id);
+			Rule deleteAddress = find(id);
 			if(deleteAddress != null) {
 				session = databaseConnection();
 				session.getTransaction().begin();
@@ -70,41 +70,41 @@ public class UserDao implements IRepository<User>{
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("Some problem occured while DELETING User data.");		
+			System.out.println("Some problem occured while DELETING Rule data.");		
 		} finally {
 			session.close();
 		}		
 	}
 
 	@Override
-	public List<User> listAll() {
+	public List<Rule> listAll() {
 		Session session = databaseConnection();
 		//hibernate query language
-		String hql = "select adr from User as adr";
+		String hql = "select adr from Rule as adr";
 		
-		TypedQuery<User> typedQuery = session.createQuery(hql,User.class);
-		List<User> userList = typedQuery.getResultList();
+		TypedQuery<Rule> typedQuery = session.createQuery(hql,Rule.class);
+		List<Rule> userList = typedQuery.getResultList();
 		
 		return userList;
 	}
 
 	@Override
-	public User find(long id) {
-		User user = null;
+	public Rule find(long id) {
+		Rule user = null;
 		Session session = databaseConnection();
 		
 		try {
-			user = session.find(User.class, id);
+			user = session.find(Rule.class, id);
 			
 			if(user != null) {
-				System.out.println("Found user : " + user);
+				System.out.println("Found Rule : " + user);
 			}else {
-				System.out.println("user not found");
+				System.out.println("Rule not found");
 			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("Some problem occured while FIND user data.");
+			System.out.println("Some problem occured while FIND Rule data.");
 		}finally {
 			session.close();
 		}
