@@ -22,7 +22,7 @@ public class RoleDao implements IRepository<Role>{
 			session.getTransaction().commit();
 			System.out.println("Role data is added to Db.");
 		} catch (Exception e) {
-			e.getMessage();
+			System.out.println( e.getMessage());;
 			System.err.println("Some problem occured while adding Role data.");
 		}finally {
 			session.close();
