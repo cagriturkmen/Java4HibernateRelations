@@ -73,6 +73,13 @@ public class Test {
 		ruleList2.add(rule);
 		role.setRules(ruleList1);
 		role2.setRules(ruleList2);
+//		List<Role> roleList = new ArrayList<>();
+//		List<Role> roleList2 = new ArrayList<>();
+//		roleList2.add(role2);
+//		roleList.add(role);
+//		roleList.add(role2);
+//		rule.setRoles(roleList);
+//		rule2.setRoles(roleList2);
 		ruleDao.create(rule2);
 		ruleDao.create(rule);
 		roleDao.create(role2);

@@ -18,12 +18,13 @@ public class RoleDao implements IRepository<Role>{
 		try {
 			session = databaseConnection();
 			session.getTransaction().begin();
-			session.persist(entity);
+			session.merge(entity);
 			session.getTransaction().commit();
 			System.out.println("Role data is added to Db.");
 		} catch (Exception e) {
 			System.out.println( e.getMessage());;
 			System.err.println("Some problem occured while adding Role data.");
+			e.printStackTrace();
 		}finally {
 			session.close();
 		}		
